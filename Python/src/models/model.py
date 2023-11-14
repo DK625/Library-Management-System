@@ -1,82 +1,25 @@
-from datetime import datetime
-from importlib_metadata import email
-
-from sqlalchemy.orm import deferred
+from sqlalchemy.orm import relationship
 
 from ..config.connect_db import db
-from sqlalchemy import Numeric
 
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(100), nullable=False)
+    points = db.Column(db.Integer, default=10)
+    fine = db.Column(db.Integer, default=0)
     role_id = db.Column(db.Integer)
+    mobile_number = db.Column(db.String(100), nullable=False)
+    admission_id = db.Column(db.String(100), nullable=False)
+    gender = db.Column(db.String(100), nullable=False)
+    dob = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, name, email, password):
-        self.name = name
-        self.email = email
-        self.password = password
+    # 1-n relationship with Transactions
+    transactions = relationship('Transactions', back_populates='borrower')
 
-
-class ToDoList(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-
-    def __init__(self, name, description, email):
-        self.name = name
-        self.description = description
-        self.email = email
-
-
-class ToDo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(100))
-    due_date = db.Column(db.String(100))
-    # status = db.Column(db.String(100), defauct="Unfinished")
-    status = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    list_name = db.Column(db.String(100))
-
-    def __init__(self, title, description, due_date, status, email, list_name):
-        self.title = title
-        self.description = description
-        self.due_date = due_date
-        self.status = status
-        self.email = email
-        self.list_name = list_name
-
-class Sensor(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.TIMESTAMP, nullable=False)
-    temperature = db.Column(Numeric(10, 2), nullable=False)
-    humidity = db.Column(Numeric(10, 2), nullable=False)
-    light = db.Column(Numeric(10, 2), nullable=False)
-    dust = db.Column(Numeric(10, 2), nullable=False)
-
-    def __init__(self, time, temperature, humidity, light, dust):
-        self.time = time
-        self.temperature = temperature
-        self.humidity = humidity
-        self.light = light
-        self.dust = dust
-
-class Action(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.TIMESTAMP, nullable=False)
-    action = db.Column(db.String(100), nullable=False)
-    status = db.Column(db.String(100), nullable=True)
-    device = db.Column(db.String(100), nullable=True)
-
-    def __init__(self, time, action, status, device):
-        self.time = time
-        self.action = action
-        self.status = status
-        self.device = device
 
 books_categories = db.Table(
     'books_categories',
@@ -84,33 +27,61 @@ books_categories = db.Table(
     db.Column('category_id', db.Integer, db.ForeignKey('category.id'))
 )
 
+
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(100))
-    books = db.relationship('Books', secondary=books_categories, back_populates='categories')
+
+    # n-n relationship with Books
+    books = relationship('Books', secondary=books_categories, back_populates='categories')
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
 
+
 class Books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    available_copies = db.Column(db.Integer, nullable=False)
+    remaining_copies = db.Column(db.Integer, nullable=False)
     bookName = db.Column(db.String(100), nullable=False)
     alternateTitle = db.Column(db.String(100))
     author = db.Column(db.String(100))
-    bookCountAvailable = db.Column(db.String(100))
     language = db.Column(db.String(100))
     publisher = db.Column(db.String(100))
     added_date = db.Column(db.TIMESTAMP, nullable=False)
-    categories = db.relationship('Category', secondary=books_categories, back_populates='books')
 
-    def __init__(self, bookName, alternateTitle, author, bookCountAvailable, language, publisher, added_date):
+    # 1-n relationship with Transactions
+    transactions = relationship('Transactions', back_populates='book')
+
+    # n-n relationship with Category
+    categories = relationship('Category', secondary=books_categories, back_populates='books')
+
+    def __init__(self, bookName, alternateTitle, author, available_copies, language, publisher, added_date):
         self.bookName = bookName
         self.alternateTitle = alternateTitle
         self.author = author
-        self.bookCountAvailable = bookCountAvailable
+        self.available_copies = available_copies
+        self.remaining_copies = available_copies
         self.language = language
         self.publisher = publisher
         self.added_date = added_date
 
+
+class Transactions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    borrower_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    borrower_name = db.Column(db.String(100), nullable=False)
+    book_name = db.Column(db.String(100), nullable=False)
+    transaction_type = db.Column(db.String(100), nullable=False)
+    from_date = db.Column(db.TIMESTAMP, nullable=False)
+    to_date = db.Column(db.TIMESTAMP, nullable=False)
+    return_date = db.Column(db.TIMESTAMP)
+    status = db.Column(db.String(100), default="Active")
+    # 1-n relationship with Users
+    borrower = relationship('Users', back_populates='transactions')
+
+    # 1-n relationship with Books
+    book = relationship('Books', back_populates='transactions')
