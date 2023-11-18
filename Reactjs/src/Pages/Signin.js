@@ -18,6 +18,15 @@ function Signin() {
         dispatch({ type: "LOGIN_START" });
         try {
             const res = await axios.post(API_URL + "api/login", userCredential);
+            const response = await axios.put(API_URL + "api/update_point?user_id=" + res.data.id, {}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': res.data.token
+                }
+            });
+            console.log("update_point")
+            console.log(response.data.data)
+
             if (res.data.err_code == 0)
                 dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
             else setError("Wrong Password Or Username")

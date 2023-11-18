@@ -52,8 +52,8 @@ function AddTransaction() {
                 const transactionData = {
                     bookId: bookId,
                     borrowerId: borrowerId,
-                    borrowerName: borrower_details.value_detail.name, // object
-                    bookName: book_details[0].value_detail.bookName, // array
+                    // borrowerName: borrower_details.value_detail.name, // object
+                    // bookName: book_details[0].value_detail.bookName, // array
                     transactionType: transactionType,
                     fromDate: fromDateString,
                     toDate: toDateString,
