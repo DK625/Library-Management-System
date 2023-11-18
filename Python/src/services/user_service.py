@@ -178,6 +178,7 @@ def get_all_users(data, type_member):
                 'name': user.name,
                 'email': user.email,
                 'points': user.points,
+                'fine': user.fine,
                 "mobile_number": user.mobile_number,
                 "admission_id": user.admission_id,
                 "gender": user.gender,
@@ -190,12 +191,14 @@ def get_all_users(data, type_member):
                         'transaction_type': transaction.transaction_type,
                         'from_date': transaction.from_date.strftime('%Y-%m-%d %H:%M:%S'),
                         'to_date': transaction.to_date.strftime('%Y-%m-%d %H:%M:%S'),
-                        'return_date': transaction.return_date.strftime('%Y-%m-%d %H:%M:%S'),
+                        'return_date': transaction.return_date.strftime(
+                            '%Y-%m-%d %H:%M:%S') if transaction.return_date else None,
                     }
                     for transaction in user.transactions
                 ],
             }
-            return user_data
+            users_data = [user_data]
+            return users_data
         else:
             return {'error': 'User not found', 'status': 404}
 
@@ -271,9 +274,13 @@ def get_all_books_with_category():
     return books_data
 
 
-def get_recent_transactions():
+def get_recent_transactions(user_id=None):
     # recent_transactions = Transactions.query.order_by(Transactions.from_date.desc()).limit(5).all()
-    recent_transactions = Transactions.query.order_by(Transactions.from_date.desc()).all()
+    if user_id:
+        recent_transactions = Transactions.query.filter_by(borrower_id=user_id).order_by(
+            Transactions.from_date.desc()).all()
+    else:
+        recent_transactions = Transactions.query.order_by(Transactions.from_date.desc()).all()
 
     transactions_data = []
 
@@ -298,8 +305,6 @@ def get_recent_transactions():
 def create_transactions(data, current_user):
     book_id = data['bookId']
     borrower_id = data['borrowerId']
-    borrower_name = data['borrowerName']
-    book_name = data['bookName']
     transaction_type = data['transactionType']
     from_date = data['fromDate']
     to_date = data['toDate']
@@ -307,7 +312,7 @@ def create_transactions(data, current_user):
     if current_user.get('role_id') is None or current_user["role_id"] != 'admin':
         return {"error": "You are not admin!"}
 
-    existing_book = Books.query.filter_by(bookName=book_name).first()
+    existing_book = Books.query.filter_by(id=book_id).first()
     if existing_book is None:
         return {"error": "The book name don't exists in the database."}
     existing_user = Users.query.filter_by(id=borrower_id).first()
@@ -316,8 +321,8 @@ def create_transactions(data, current_user):
     new_transaction = Transactions(
         book_id=book_id,
         borrower_id=borrower_id,
-        borrower_name=borrower_name,
-        book_name=book_name,
+        borrower_name=existing_user.name,
+        book_name=existing_book.bookName,
         transaction_type=transaction_type,
         from_date=from_date,
         to_date=to_date,
@@ -328,11 +333,12 @@ def create_transactions(data, current_user):
     transaction_data = {
         "book_id": book_id,
         "borrower_id": borrower_id,
-        "borrower_name": borrower_name,
-        "book_name": book_name,
+        "borrower_name": existing_user.name,
+        "book_name": existing_book.bookName,
         "transaction_type": transaction_type,
         "from_date": from_date,
         "to_date": to_date,
+        "status": new_transaction.status
     }
     return transaction_data
 
@@ -382,7 +388,7 @@ def return_book(transaction_id, current_user):
         points -= days_difference
     fine = transaction.borrower.fine
     if points < 0:
-        fine = -points*1000
+        fine = -points * 1000
     transaction.borrower.points = points
     transaction.borrower.fine = fine
     db.session.commit()
@@ -400,13 +406,13 @@ def recharge_account(data, user_id, current_user):
         return {"error": "You are not admin!"}
     user = Users.query.filter_by(id=user_id).first()
     if not user:
-        return {"err_message": "Transaction is not found!"}
+        return {"err_message": "User is not found!"}
     point = user.points
     fine = user.fine
     if data['type'] == 'money':
         fine -= data['value']
         if fine < 0:
-            point += (-fine/1000)
+            point += (-fine / 1000)
             fine = 0
     elif data['type'] == 'point':
         point += data['value']
@@ -414,3 +420,87 @@ def recharge_account(data, user_id, current_user):
     user.fine = fine
     db.session.commit()
     return get_all_users({'role_id': 'admin'}, 'all')
+
+
+def update_point(user_id, current_user):
+    if current_user["role_id"] != 'admin' and int(user_id) != current_user['id']:
+        return {"error": "You are not allow read other's point!"}
+    if current_user["role_id"] != 'admin':
+        user = Users.query.filter_by(id=user_id).first()
+        if not user:
+            return {"err_message": "User is not found!"}
+        point = user.points
+        fine = user.fine
+        previous_point = point
+        previous_fine = fine
+        over_dues = 0
+        transactions = Transactions.query.filter_by(
+            borrower_id=user_id, transaction_type='Issued', status='Active').all()
+        for transaction in transactions:
+            if datetime.now() > transaction.time_check_point:
+                time_difference = datetime.now() - transaction.time_check_point
+                over_dues += time_difference.days
+                if time_difference.days > 0:
+                    transaction.time_check_point = datetime.now()
+                    db.session.commit()
+        # mỗi khi check point xong (khi thời gian quá hạn lớn hơn 1 ngày) thì cập nhật lại thòi gian đã checkpoint để lần sau check tiếp
+        if point <= 0:
+            point -= over_dues
+            fine += over_dues * 1000
+        # nếu ban đầu point nhỏ hơn bằng 0, nghĩa là đã có tiền phạt thì cứ qua 1 ngày trừ 1 điểm và trừ 1k
+        else:
+            point -= over_dues
+            if point < 0:
+                fine += (-point) * 1000
+        # nếu ban đầu point lớn hơn 0, nghĩa là chưa có tiền phạt thì qua 1 ngày trừ 1 điểm, tiền phạt chỉ được tính khi point đã âm
+        # ví dụ id = 4, point = 10, fine = 5000, đã quá 15 ngày thì point = -5, fine = 10000
+
+        user.points = point
+        user.fine = fine
+        db.session.commit()
+        return {
+            "user_id": user_id,
+            "name": user.name,
+            "previous_point": previous_point,
+            "previous_fine": previous_fine,
+            "next_point": point,
+            "next_fine": fine
+        }
+
+    update_points = []
+    users = Users.query.all()
+    for user in users:
+        point = user.points
+        fine = user.fine
+        previous_point = point
+        previous_fine = fine
+        over_dues = 0
+        transactions = Transactions.query.filter_by(
+            borrower_id=user.id, transaction_type='Issued', status='Active').all()
+        for transaction in transactions:
+            if datetime.now() > transaction.time_check_point:
+                time_difference = datetime.now() - transaction.time_check_point
+                over_dues += time_difference.days
+                if time_difference.days > 0:
+                    transaction.time_check_point = datetime.now()
+                    db.session.commit()
+        if point <= 0:
+            point -= over_dues
+            fine += over_dues * 1000
+        else:
+            point -= over_dues
+            if point < 0:
+                fine += (-point) * 1000
+
+        user.points = point
+        user.fine = fine
+        db.session.commit()
+        update_points.append({
+            "user_id": user.id,
+            "name": user.name,
+            "previous_point": previous_point,
+            "previous_fine": previous_fine,
+            "next_point": point,
+            "next_fine": fine
+        })
+    return update_points

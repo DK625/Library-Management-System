@@ -80,8 +80,24 @@ class Transactions(db.Model):
     to_date = db.Column(db.TIMESTAMP, nullable=False)
     return_date = db.Column(db.TIMESTAMP)
     status = db.Column(db.String(100), default="Active")
+    time_check_point = db.Column(db.TIMESTAMP)
     # 1-n relationship with Users
     borrower = relationship('Users', back_populates='transactions')
 
     # 1-n relationship with Books
     book = relationship('Books', back_populates='transactions')
+
+    def __init__(self, book_id, borrower_id, borrower_name, book_name, transaction_type, from_date, to_date,
+                 return_date=None, status="Active"):
+        self.book_id = book_id
+        self.borrower_id = borrower_id
+        self.borrower_name = borrower_name
+        self.book_name = book_name
+        self.transaction_type = transaction_type
+        self.from_date = from_date
+        self.to_date = to_date
+        self.return_date = return_date
+        self.status = status
+
+        # Set time_check_point to the default value of to_date
+        self.time_check_point = to_date

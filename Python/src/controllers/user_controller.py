@@ -199,7 +199,8 @@ def update_book():
 
 
 def get_recent_transactions():
-    book_data = user_service.get_recent_transactions()
+    user_id = request.args.get('user_id')
+    book_data = user_service.get_recent_transactions(user_id)
     if 'error' in book_data:
         response = jsonify({"error": book_data['error']})
         response.status_code = 400
@@ -244,6 +245,20 @@ def recharge_account():
     user_id = request.args.get('id')
     current_user = Middleware()
     transaction = user_service.recharge_account(data, user_id, current_user)
+    if 'error' in transaction:
+        response = jsonify({"error": transaction['error']})
+        response.status_code = 400
+        return response
+    else:
+        response = jsonify({"data": transaction})
+        response.status_code = 201
+        return response
+
+
+def update_point():
+    user_id = request.args.get('user_id')
+    current_user = Middleware()
+    transaction = user_service.update_point(user_id, current_user)
     if 'error' in transaction:
         response = jsonify({"error": transaction['error']})
         response.status_code = 400

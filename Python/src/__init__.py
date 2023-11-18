@@ -6,7 +6,7 @@ from flask_restful import Api
 
 from .config.config import config
 from .config.connect_db import db
-from .route.web import Login, User, Category, Book, Transaction, Recharge, sign_up
+from .route.web import Login, User, Category, Book, Transaction, Recharge, Point, sign_up
 
 
 def create_app():
@@ -26,4 +26,5 @@ def create_app():
     api.add_resource(User, "/api/get_all_member")
     api.add_resource(Transaction, "/api/transactions")
     api.add_resource(Recharge, "/api/recharge")
+    api.add_resource(Point, "/api/update_point")
     return app

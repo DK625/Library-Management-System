@@ -57,3 +57,8 @@ class Transaction(Resource):
 class Recharge(Resource):
     def put(self):
         return user_controller.recharge_account()
+
+
+class Point(Resource):
+    def put(self):
+        return user_controller.update_point()
