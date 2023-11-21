@@ -1,7 +1,7 @@
 .photogallery-container {
   width: 100%;
   height: auto;
-  background-color: rgb(138, 115, 241);
+  background-color: #a5673f;
   padding: 15px;
   display: flex;
   flex-direction: column;

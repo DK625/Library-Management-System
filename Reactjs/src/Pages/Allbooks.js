@@ -7,49 +7,105 @@ function Allbooks() {
       <div className="books">
         <div className="book-card">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp16xiXu1ZtTzbLy-eSwEK4Ng6cUpUZnuGbQ&usqp=CAU"
-            alt=""
-          ></img>
-          <p className="bookcard-title">Wings Of Fire</p>
-          <p className="bookcard-author">By Pranavdhar</p>
+            src="https://product.hstatic.net/1000237375/product/nhung-vu-ky-an-cua-sherlock-holmes-14934-500_master.jpg"></img>
+          <p className="bookcard-title">Sherlock Holmes</p>
+          <p className="bookcard-author">By Arthur Conan Doyle</p>
           <div className="bookcard-category">
-            <p>Auto Biography</p>
+            <p>Trinh thám</p>
           </div>
           <div className="bookcard-emptybox"></div>
         </div>
         <div className="book-card">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-Rb2t6jA5ml7n57qdTZbAOWX1qSfsLCbaOA&usqp=CAU"
+            src="https://product.hstatic.net/200000343865/product/100_bd275c22338e4df3a7b01a0b8553e338_master.jpg"
             alt=""
           ></img>
-          <p className="bookcard-title">The Power Of Your Subconscious Mind</p>
-          <p className="bookcard-author">By Joseph</p>
+          <p className="bookcard-title">Thám tử lừng danh Conan</p>
+          <p className="bookcard-author">By Gosho Aoyama</p>
           <div className="bookcard-category">
-            <p>Psychology</p>
+            <p>Trinh thám, Đời thường, Lãng mạn</p>
           </div>
           <div className="bookcard-emptybox"></div>
         </div>
         <div className="book-card">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRFiDRQ7a-Oo-CnMmnbIMApP1Cq9B5bYx-UA&usqp=CAU"
+            src="https://product.hstatic.net/200000343865/product/nguoi-khong-lo-xanh_layout-1_15cf1626a2b14420879695982dd1c39f_1aab393935ba4f92aa8b8a4cfa508ce1.jpg"
             alt=""
           ></img>
-          <p className="bookcard-title">Elon Musk</p>
-          <p className="bookcard-author">By Elon</p>
+          <p className="bookcard-title">Doraemon Nobita và Người khổng lồ xanh</p>
+          <p className="bookcard-author">By Fujiko.F.Fujio</p>
           <div className="bookcard-category">
-            <p>Auto Biography</p>
+            <p>Phiêu lưu, Hài hước</p>
           </div>
           <div className="bookcard-emptybox"></div>
         </div>
         <div className="book-card">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-Rb2t6jA5ml7n57qdTZbAOWX1qSfsLCbaOA&usqp=CAU"
+            src="https://upload.wikimedia.org/wikipedia/vi/f/f8/Bia_sach_The_Fault_in_Our_Stars.jpg"
             alt=""
           ></img>
-          <p className="bookcard-title">The Subtle Art Of Not Giving A Fuck</p>
-          <p className="bookcard-author">By Mark Manson</p>
+          <p className="bookcard-title">Khi lỗi thuộc về những vì sao</p>
+          <p className="bookcard-author">By John Green</p>
           <div className="bookcard-category">
-            <p>COMIC</p>
+            <p>Lãng mạn, Đời thường</p>
+          </div>
+          <div className="bookcard-emptybox"></div>
+        </div>
+        <div className="book-card">
+          <img
+            src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1645950260i/60504666.jpg"
+            alt=""
+          ></img>
+          <p className="bookcard-title">Tết Ở Làng Địa Ngục</p>
+          <p className="bookcard-author">By Thảo Trang</p>
+          <div className="bookcard-category">
+            <p>Kinh dị</p>
+          </div>
+          <div className="bookcard-emptybox"></div>
+        </div>
+        <div className="book-card">
+          <img
+            src="https://images.baoquangnam.vn/dataimages/201901/original/images1493344_bd.gif"
+            alt=""
+          ></img>
+          <p className="bookcard-title">Thất tịch không mưa</p>
+          <p className="bookcard-author">By Lâu Vũ Tình</p>
+          <div className="bookcard-category">
+            <p>Tiểu thuyết, Lãng mạn</p>
+          </div>
+          <div className="bookcard-emptybox"></div>
+        </div>
+        <div className="book-card">
+          <img
+            src="https://cdn0.fahasa.com/media/catalog/product/d/n/dntttttuntitled.png"></img>
+          <p className="bookcard-title">Đắc Nhân Tâm</p>
+          <p className="bookcard-author">By Dale Carnegie</p>
+          <div className="bookcard-category">
+            <p>Kỹ năng - Đời sống</p>
+          </div>
+          <div className="bookcard-emptybox"></div>
+        </div>
+        <div className="book-card">
+          <img
+            src="https://cdn0.fahasa.com/media/flashmagazine/images/page_images/nhung_cau_chuyen_nuoi_duong_tam_hon___phep_mau_cua_nu_cuoi/2023_03_24_16_49_42_7-390x510.jpg"
+            alt=""
+          ></img>
+          <p className="bookcard-title">Gấu con tinh nghịch</p>
+          <p className="bookcard-author">By Nam Mi-Young</p>
+          <div className="bookcard-category">
+            <p>Thiếu nhi</p>
+          </div>
+          <div className="bookcard-emptybox"></div>
+        </div>
+        <div className="book-card">
+          <img
+            src="https://nhasachquangloi.vn/pub/media/catalog/product/cache/3bd4b739bad1f096e12e3a82b40e551a/c/o/conan100-limited.jpg"
+            alt=""
+          ></img>
+          <p className="bookcard-title">Thám tử lừng danh Conan Đặc biệt</p>
+          <p className="bookcard-author">By Gosho Aoyama</p>
+          <div className="bookcard-category">
+            <p>Trinh thám</p>
           </div>
           <div className="bookcard-emptybox"></div>
         </div>

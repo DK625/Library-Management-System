@@ -14,11 +14,11 @@ function Footer() {
                     <div className="contact-details">
                         <h1>Contact Us</h1>
                         <p>Librarian</p>
-                        <p>Government School</p>
-                        <p>Visakhapatnam-530041</p>
-                        <p>Andhra Pradesh</p>
-                        <p>India</p>
-                        <p><b>Email:</b>example@gmail.com</p>
+                        <p>Học viện Công nghệ Bưu chính Viễn thông</p>
+                        <p>Km10 Nguyễn Trãi</p>
+                        <p>Hà Đông</p>
+                        <p>Hà Nội</p>
+                        <p><b>Email:</b>ptit@gmail.com</p>
                     </div>
                     <div className='usefull-links'>
                         <h1>Usefull Links</h1>
@@ -29,9 +29,9 @@ function Footer() {
                     </div>
                     <div className='librarian-details'>
                         <h1>Librarian</h1>
-                        <p>Name</p>
+                        <p>Nguyễn Thu P</p>
                         <p>Education</p>
-                        <p>Contact: +91 9123456787</p>
+                        <p>Contact: +84 123456789</p>
                     </div>
                 </div>
                 <div className="contact-social" >
@@ -42,7 +42,7 @@ function Footer() {
                 </div>
             </div>
             <div className='copyright-details'>
-                <p className='footer-copyright'>&#169; 2020 copyright all right reserved<br /><span>Designed with ❤️ by Pranavdhar Reddy</span></p>
+                <p className='footer-copyright'>&#169; 2020 copyright all right reserved<br /></p>
             </div>
         </div>
     )

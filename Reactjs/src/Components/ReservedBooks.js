@@ -12,33 +12,33 @@ function ReservedBooks() {
                     <th>Date</th>
                 </tr>
                 <tr>
-                    <td>Pranav</td>
-                    <td>Rich Dad Poor Dad</td>
+                    <td>Fujiki.F.Fujio</td>
+                    <td>Doraemon</td>
                     <td>12/7/2021</td>
                 </tr>
                 <tr>
-                    <td>Sashank</td>
-                    <td>The Subtle Art</td>
+                    <td>Gosho Aoyama</td>
+                    <td>Thám tử lừng danh Conan</td>
                     <td>10/7/2021</td>
                 </tr>
                 <tr>
-                    <td>Tanishq</td>
-                    <td>Wings Of Fire</td>
+                    <td>Dale Carnegie</td>
+                    <td>Đắc nhân tâm</td>
                     <td>15/9/2021</td>
                 </tr>
                 <tr>
-                    <td>Akhil</td>
-                    <td>The Secret</td>
+                    <td>Thảo Trang</td>
+                    <td>Tết Ở Làng Địa Ngục</td>
                     <td>02/9/2021</td>
                 </tr>
                 <tr>
-                    <td>Surya</td>
-                    <td>Bad Guys</td>
+                    <td>Lâu Vũ Tình</td>
+                    <td>Thất Tịch Không Mưa</td>
                     <td>21/7/2021</td>
                 </tr>
                 <tr>
-                    <td>Dinesh</td>
-                    <td>Giovanni Rovelli</td>
+                    <td>John Green</td>
+                    <td>Khi Lỗi Thuộc Về Những Vì Sao</td>
                     <td>02/7/2021</td>
                 </tr>
             </table>

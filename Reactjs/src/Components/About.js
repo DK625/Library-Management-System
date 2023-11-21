@@ -7,27 +7,27 @@ function About() {
             <h2 className="about-title">About the Library</h2>
             <div className="about-data">
                 <div className="about-img">
-                    <img src="https://images.unsplash.com/photo-1583468982228-19f19164aee2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=913&q=80" alt="" />
+                    <img src="https://static-images.vnncdn.net/files/publish/2023/8/6/ban-doc-1-444.jpg" alt="" />
                 </div>
                 <div>
                     <p className="about-text">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting 
-                        industry. Lorem Ipsum has been the industry's standard dummy text 
-                        ever since the 1500s, when an unknown printer took a galley of type 
-                        and scrambled it to make a type specimen book. It has survived not 
-                        only five centuries.<br/>
+                        Được xây dựng theo chuẩn quốc tế, Thư viện Ước mơ có đầy đủ đầu sách và 
+                        tài liệu tham khảo cho mọi chuyên ngành. Điều thú vị là, 90% dữ liệu 
+                        trong thư viện đến từ hệ thống dữ liệu trực tuyến từ cơ sở Melbourne, 
+                        và luôn được cập nhật liên tục, từ nhiều nguồn trên toàn cầu. Đây là 
+                        nguồn tài liệu dồi dào và quý giá cho sinh viên, không chỉ trong suốt 
+                        thời gian theo học tại trường, mà còn về lâu dài sau khi đã tốt nghiệp 
+                        và trở thành cựu sinh viên. RMIT tự hào là một trong những thư viện Anh 
+                        ngữ lớn nhất Việt Nam với nguồn tài nguyên dồi dào và nhiều hoạt động 
+                        lưu trữ và triển lãm kỹ thuật số.<br/>
                         <br/>
-                        Contrary to popular belief, Lorem Ipsum is not simply random text. 
-                        It has roots in a piece of classical Latin literature from 45 BC, 
-                        making it over 2000 years old. Richard McClintock, a Latin professor 
-                        at Hampden-Sydney College in Virginia, looked up one of the more obscure 
-                        Latin words, consectetur, from a Lorem Ipsum passage.<br/>
+                        Để đáp ứng nhu cầu thông tin của bạn đọc Thủ đô, Thư viện đã không ngừng 
+                        đổi mới phương thức, nâng cao chất lượng phục vụ: đơn giản thủ tục làm thẻ; 
+                        mở rộng hệ thống các phòng phục vụ: phòng thiếu nhi, phòng đọc báo tạp chí, 
+                        phòng mượn, phòng đọc tự chọn, phòng đọc theo yêu cầu, phòng đọc sách ngoại                             
+                        văn, phòng đọc dành cho người khiếm thị, phòng đọc tài liệu về Hà Nội, phòng                             
+                        đọc đa phương tiện… <br/>
                         <br/>
-                        There are many variations of passages of Lorem Ipsum available, 
-                        but the majority have suffered alteration in some form, by injected 
-                        humour<br/>
-                        <br/>
-                        Your suggestions for improvement are always welcome!
                     </p>
                 </div>
             </div>
